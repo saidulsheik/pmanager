@@ -76,9 +76,22 @@ class GroupMenuController extends Controller
      * @param  \App\Model\GroupMenu  $groupMenu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GroupMenu $groupMenu)
+    public function update(Request $request, groupmenu $groupmenu)
     {
-        //
+        if( Auth::check() ){
+            $groupmenuUpdate=GroupMenu::where('id', $groupmenu->id)->update([
+                'group_name'=>$request->input('group_name'),
+                'group_icon'=>$request->input('group_icon'),
+                'is_sub_menu'=>$request->input('is_sub_menu'),
+                'sl_order'=>$request->input('sl_order'),
+            ]);
+            
+            if($groupmenuUpdate){
+                return redirect()->route('groupmenu.index', ['groupmenu'=>$groupmenu->id])
+                ->with('success' , "Group Menu Updated successfully");
+            }
+        }
+        return view('auth.login');
     }
 
     /**

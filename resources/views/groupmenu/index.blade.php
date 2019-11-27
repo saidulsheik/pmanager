@@ -54,7 +54,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                         <label>Menu Icon</label>
-                                        <input type="text" name="group_icon" required class="form-control" placeholder="Enter Menu Icon" value="{{ !empty($groupmenu) ? $groupmenu->group_icon : '' }}">
+                                        <input type="text" name="group_icon" required class="form-control" placeholder='<i class="nav-icon fas fa-chart-pie"></i>'  value="{{ !empty($groupmenu) ? $groupmenu->group_icon : '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -62,9 +62,9 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Has Sub-Menu?</label>
-                                            <select name="menu_icon" id="menu_icon" class="form-control">
-                                                <option value="1">Yes</option>
-                                                <option value="0">No</option>
+                                            <select name="is_sub_menu" id="is_sub_menu" class="form-control">
+                                                <option {{ !$is_sub_menu=!empty($groupmenu) ? $groupmenu->group_icon : '' }} {{$is_sub_menu==1? 'selected' : '' }} value="1">Yes</option>
+                                                <option {{ !$is_sub_menu=!empty($groupmenu) ? $groupmenu->group_icon : '' }} {{$is_sub_menu==0? 'selected' : '' }} value="0">No</option>
                                             </select>
                                         </div>
                                     </div>
@@ -110,19 +110,19 @@
                                             @php($i=1)
                                             @foreach ($groupmenus as $groupmenu)
                                                 <tr>
-                                                <td>{{$i++}}</td>
-                                                <td>{{$groupmenu->group_name}}</td>
-                                                <td> {{$groupmenu->group_icon}}</td>
-                                                <td>{{$groupmenu->is_sub_menu==1? 'Yes' : 'No'}}</td>
-                                                <td> {{$groupmenu->sl_order}}</td>
-                                                <td style="text-align:center"  title="Edit"> 
-                                                    <a href="{{ URL::to("groupmenu/$groupmenu->id/edit") }}">
-                                                        <i class="fas fa-edit" style="color:#007bff"></i>
-                                                    </a>
-                                                    <a href="">
-                                                        <i class="fas fa-trash" style="color:red"  title="Delete"></i>
-                                                    </a>
-                                                </td>
+                                                    <td>{{$i++}}</td>
+                                                    <td>{{$groupmenu->group_name}}</td>
+                                                    <td> {{$groupmenu->group_icon}}</td>
+                                                    <td>{{$groupmenu->is_sub_menu==1? 'Yes' : 'No'}}</td>
+                                                    <td> {{$groupmenu->sl_order}}</td>
+                                                    <td style="text-align:center"  title="Edit"> 
+                                                        <a href="{{ URL::to("groupmenu/$groupmenu->id/edit") }}">
+                                                            <i class="fas fa-edit" style="color:#007bff"></i>
+                                                        </a>
+                                                        <a href="">
+                                                            <i class="fas fa-trash" style="color:red"  title="Delete"></i>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @else
