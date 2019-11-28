@@ -40,7 +40,19 @@ class GroupMenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::check()){
+            $groupmenu = GroupMenu::create([
+                'group_name' => $request->input('group_name'),
+                'group_icon' => $request->input('group_icon'),
+                'is_sub_menu' => $request->input('is_sub_menu'),
+                'sl_order' => $request->input('sl_order'),
+            ]);
+            if($groupmenu){
+                return redirect()->route('groupmenu.index', ['groupmenu'=> $groupmenu->id])
+                ->with('success' , 'Group Menu created successfully');
+            }
+        }
+        return back()->withInput()->with('errors', 'Error creating new company');
     }
 
     /**
