@@ -91,10 +91,10 @@
                                         @if (!empty($menus))
                                             @php($i=1)
                                             @foreach ($menus as $menu)
-                                                {{$menu}}
+                                                
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$menu->groupmenu->group_name}}</td>
+                                                    <td>{{($menu->groupmenus->group_name)}}</td>
                                                     <td>{{$menu->menu_name}}</td>
                                                     <td> {{$menu->menu_action}}</td>
                                                     <td> {{$menu->sl_order}}</td>
