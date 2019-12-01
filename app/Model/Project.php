@@ -12,8 +12,10 @@ class Project extends Model
         'name',
         'description',
         'company_id', 
-        'user_id', 
-        'days',
+        'start_date', 
+        'end_date',
+        'progress',
+        'user_id',
     ];
 
     public function company(){

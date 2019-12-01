@@ -90,11 +90,37 @@
                                     <div class="col-sm-12">
                                       <!-- text input -->
                                       <div class="form-group">
-                                        <label>Approximate Days</label>
-                                        <input type="number" name="days" required class="form-control" placeholder="Enter Approximate Days" value="{{ !empty($project) ? $project->days : '' }}">
+                                        <label>Start Date</label>
+                                        <input type="date" name="start_date" required class="form-control" placeholder="Select start date" value="{{ !empty($project) ? $project->start_date : '' }}">
                                       </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                      <label>End Date</label>
+                                      <input type="date" name="end_date" required class="form-control" placeholder="Select end date" value="{{ !empty($project) ? $project->end_date : '' }}">
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label>Progress</label>
+                                    <select name="progress" id="progress" class="form-control">
+                                      <option value="">Select Project Project</option>
+                                      <option value="In-Progress">In-Progress</option>
+                                      <option value="Onhold">Onhold</option>
+                                      <option value="Cancled">Cancled</option>
+                                      <option value="Success">Success</option>
+                                    </select>
+                                  </div>
+                                </div>
+                            </div>
+
                         </div>
 
                     <div class="card-footer">
@@ -118,8 +144,10 @@
                                         <th>Project Name</th>
                                         <th>Description</th>
                                         <th>Department Name</th>
-                                        <th>User Name</th>
-                                        <th>Approximate Days</th>
+                                        <th>Created By</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Progress</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -131,9 +159,11 @@
                                                 <td>{{$i++}}</td>
                                                 <td><a href="{{ URL::to("project/$project->id") }}">{{$project->name}}</a></td>
                                                 <td> {{$project->description}}</td>
-                                                <td>  {{$project->company->name}}</td>
-                                                <td>  {{$project->user->name}}</td>
-                                                <td>  {{$project->days}} Days</td>
+                                                <td>{{$project->company->name}}</td>
+                                                <td>{{$project->user->name}}</td>
+                                                <td>{{$project->start_date}}</td>
+                                                <td>{{$project->end_date}}</td>
+                                                <td>{{$project->progress}}</td>
                                                 <td style="text-align:center"  title="Edit"> 
                                                   <a href="{{ URL::to("project/$project->id/edit") }}"> <i class="fas fa-edit" style="color:#007bff"></i></a>
                                                   ||

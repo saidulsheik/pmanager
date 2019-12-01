@@ -6,7 +6,7 @@
                     <div class="container-fluid">
                       <div class="row mb-2">
                         <div class="col-sm-6">
-                          <h1>Group Menu</h1>
+                          <h1>Menu</h1>
                         </div>
                         <div class="col-sm-6">
                           <ol class="breadcrumb float-sm-right">
@@ -42,30 +42,63 @@
                           <form action="{{ url("menu/$id") }}" method="post">
                           <input type="hidden" name="_method" value="{{$method}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <div class="row">
-                                  <div class="col-sm-12">
-                                    <div class="form-group">
-                                      <label>Memu  Name</label>
-                                      <input type="text" name="menu_name" required class="form-control" placeholder="Enter Group Name" value="{{ !empty($menu) ? $menu->menu_name : '' }}">
-                                    </div>
+                                
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <!-- select option -->
+                                  <div class="form-group">
+                                    <label>Menu Group</label>
+                                    <select name="group_menu" id="group_menu" class="form-control select2">
+                                      <option value="">Select Group Menu</option>
+                                      @foreach($groupmenus as $groupmenu)
+                                        <option {{!$group_menus_id=!empty($menu)?$menu->group_menus_id : '' }} {{ ($group_menus_id==$groupmenu->id)  ? 'selected' : '' }} value="{{$groupmenu->id}}">{{$groupmenu->group_name}}</option>
+                                      @endforeach
+                                    </select>
                                   </div>
                                 </div>
-                               
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                        <label>Serial Order</label>
-                                        <input type="text" name="sl_order" required class="form-control" placeholder="Enter Serial Order" value="{{ !empty($menu) ? $menu->sl_order : '' }}">
-                                        </div>
-                                    </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Memu  Name</label>
+                                    <input type="text" name="menu_name" required class="form-control" placeholder="Enter Group Name" value="{{ !empty($menu) ? $menu->menu_name : '' }}">
+                                  </div>
                                 </div>
-
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Access Role</label>
+                                    <select class="select2" name="user_access" multiple="multiple" data-placeholder="Select User Role" style="width: 100%;">
+                                      <option value=""></option>
+                                      @foreach ($roles as $role)
+                                      <option value="{{$role->id}}">{{$role->name}}</option>
+                                      @endforeach
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Memu Action</label>
+                                    <input type="text" name="menu_action" required class="form-control" placeholder="Enter User Action" value="{{ !empty($menu) ? $menu->menu_action : '' }}">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-12">
+                                      <div class="form-group">
+                                      <label>Serial Order</label>
+                                      <input type="text" name="sl_order" required class="form-control" placeholder="Enter Serial Order" value="{{ !empty($menu) ? $menu->sl_order : '' }}">
+                                      </div>
+                                  </div>
+                              </div>
                         </div>
-
-                    <div class="card-footer">
-                        <button type="submit" name="submit" value="submit" class="btn btn-primary">{{ !empty($menu) ? 'Update' : 'Save' }}</button>
-                        <a href="{{ URL::to("menu") }}"  class="btn btn-danger">Cancel</a>
-                    </div>
+                        <div class="card-footer">
+                            <button type="submit" name="submit" value="submit" class="btn btn-primary">{{ !empty($menu) ? 'Update' : 'Save' }}</button>
+                            <a href="{{ URL::to("menu") }}"  class="btn btn-danger">Cancel</a>
+                        </div>
                     </form>
                     </div>
                     
@@ -91,10 +124,11 @@
                                         @if (!empty($menus))
                                             @php($i=1)
                                             @foreach ($menus as $menu)
-                                                
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{($menu->groupmenus->group_name)}}</td>
+                                                    <td>
+                                                      {{$menu->group_menus->group_name}}
+                                                    </td>
                                                     <td>{{$menu->menu_name}}</td>
                                                     <td> {{$menu->menu_action}}</td>
                                                     <td> {{$menu->sl_order}}</td>

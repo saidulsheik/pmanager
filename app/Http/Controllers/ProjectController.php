@@ -48,12 +48,15 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         if(Auth::check()){
+           // dd($request);
             $project = Project::create([
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
                 'company_id'=>$request->input('company_id'),
+                'start_date'=>$request->input('start_date'),
+                'end_date'=>$request->input('end_date'),
+                'progress'=>$request->input('progress'),
                 'user_id' => Auth::user()->id,
-                'days' => $request->input('days'),
             ]);
             if($project){
                 return redirect()->route('project.index', ['project'=> $project->id])
@@ -103,11 +106,13 @@ class ProjectController extends Controller
     {
         if( Auth::check() ){
             $projectUpdate=Project::where('id', $project->id)->update([
-                'name'=>$request->input('name'),
-                'description'=>$request->input('description'),
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
                 'company_id'=>$request->input('company_id'),
-                'days'=>$request->input('days'),
-                'user_id'=>Auth::user()->id,
+                'start_date'=>$request->input('start_date'),
+                'end_date'=>$request->input('end_date'),
+                'progress'=>$request->input('progress'),
+                'added_by' => Auth::user()->id,
             ]);
             if($projectUpdate){
                 return redirect()->route('project.index', ['project'=>$project->id])

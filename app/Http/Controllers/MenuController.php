@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\GroupMenu;
 use App\Model\Menu;
+use App\Model\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,7 @@ class MenuController extends Controller
             return view('menu.index', [
                 'menu'=>[],
                 'menus'=>Menu::all(), 
+                'roles'=>Role::all(),
                 'groupmenus'=>GroupMenu::all(),
              ]);
         }
@@ -66,7 +68,21 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        // if( Auth::check() ){
+        //     $companies = Company::all();
+        //     $company=Company::find($company->id);
+        //     return view('company.index',  ['company'=>$company, 'companies'=>$companies]);
+        // }
+        // 
+        if(Auth::check() ){
+            return view('menu.index', [
+                'menu'=>Menu::find($menu->id),
+                'menus'=>Menu::all(), 
+                'roles'=>Role::all(),
+                'groupmenus'=>GroupMenu::all(),
+             ]);
+        }
+        return view('auth.login');
     }
 
     /**

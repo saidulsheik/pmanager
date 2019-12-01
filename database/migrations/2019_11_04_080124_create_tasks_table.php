@@ -20,13 +20,13 @@ class CreateTasksTable extends Migration
             $table->text('attachment')->nullable();
             $table->string('status')->default('active');
             $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('user_id');
-            $table->integer('days')->unsigned()->nullable();
-            $table->integer('housrs')->unsigned()->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('project_id')->references('id')->on('projects');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Model;
-use App\Model\GroupMenu;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
@@ -14,7 +13,11 @@ class Menu extends Model
         'sl_order',
     ];
 
-    public function groupmenus(){
+    public function group_menus(){
        return $this->belongsTo(GroupMenu::class);
+    }
+
+    public function roles(){
+        return $this->hasMany(Role::Class);
     }
 }
