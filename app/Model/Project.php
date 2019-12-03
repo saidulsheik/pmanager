@@ -9,6 +9,8 @@ class Project extends Model
 {
     //
     protected $fillable = [
+        'type_id',
+        'status_id',
         'name',
         'description',
         'company_id', 
@@ -26,4 +28,12 @@ class Project extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    // public function project_types(){
+    //     return $this->belongsTo(ProjectType::class);
+    // }
+
+    // public function project_statuses(){
+    //     return $this->belongsTo(ProjectStatus::class);
+    // }
 }

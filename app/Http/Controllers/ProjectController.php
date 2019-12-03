@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Project;
 use App\Model\Company;
+use App\Model\ProjectStatus;
+use App\Model\ProjectType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
@@ -22,9 +24,17 @@ class ProjectController extends Controller
     {
         if( Auth::check()){
             $project=[];
+            $types=ProjectType::all();
+            $statuses=ProjectStatus::all();
             $projects = Project::all();
             $companies = Company::all();
-            return view('project.index', ['projects'=>$projects, 'project'=>$project, 'companies'=>$companies]);
+            return view('project.index', [
+                    'projects'=>$projects,
+                    'project'=>$project, 
+                    'companies'=>$companies,
+                    'types'=>$types,
+                    'statuses'=>$statuses,
+                 ]);
         }
         return view('auth.login');
     }
@@ -89,8 +99,16 @@ class ProjectController extends Controller
         if( Auth::check() ){
             $companies = Company::all();
             $projects = Project::all();
+            $types=ProjectType::all();
+            $status=ProjectStatus::all();
             $project=Project::find($project->id);
-            return view('project.index',  ['project'=>$project, 'projects'=>$projects, 'companies'=>$companies]);
+            return view('project.index',  [
+                    'project'=>$project,
+                    'projects'=>$projects,
+                    'companies'=>$companies,
+                    'types'=>$types,
+                    'status'=>$status,
+                ]);
         }
         return view('auth.login');
     }

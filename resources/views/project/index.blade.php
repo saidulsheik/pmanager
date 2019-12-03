@@ -2,51 +2,54 @@
 
 @section('content')
     <section class="content">
-            <section class="content-header">
-                    <div class="container-fluid">
-                      <div class="row mb-2">
-                        <div class="col-sm-6">
-                          <h1>Project</h1>
-                        </div>
-                        <div class="col-sm-6">
-                          <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Project</li>
-                          </ol>
-                        </div>
-                      </div>
-                    </div><!-- /.container-fluid -->
-                  </section>
-        <div class="container-fluid">
-            <div class="row" id="successMessage">
-              <div class="col-md-12">
-                  @if ($message = Session::get('success'))
-                  <div class="alert alert-success alert-block" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">×</button>	
-                          <strong>{{ $message }}</strong>
-                  </div>
-                  @endif
-              </div>
-            </div>
-            <div class="row">  
-                <div class="col-md-4">
+
+          <div class="modal fade" id="modal-lg">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Add New Project</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                @php($id = !empty($project) ? $project->id : '')
+                @php($method = !empty($project) ? 'PUT' : 'POST')
+                <form action="{{ url("project/$id") }}" method="post">
+                <div class="modal-body">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Add New Project</h3>
-                        </div>
                         <div class="card-body">
-                            {{-- @if ($message = Session::get('success'))
-                            <div class="alert alert-success alert-block" role="alert">
-                              <button type="button" class="close" data-dismiss="alert">×</button>	
-                                    <strong>{{ $message }}</strong>
-                            </div>
-                            @endif --}}
-                          {{-- {{Route::currentRouteName()}} --}}
-                          @php($id = !empty($project) ? $project->id : '')
-                          @php($method = !empty($project) ? 'PUT' : 'POST')
-                          <form action="{{ url("project/$id") }}" method="post">
                             <input type="hidden" name="_method" value="{{$method}}">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <!-- select option -->
+                                    <div class="form-group">
+                                      <label>Project Type</label>
+                                      <select name="company_id" id="company_id" class="form-control select2">
+                                        <option value="">Select Project Type</option>
+                                        @foreach ($types as $type)
+                                          <option {{ !$type_id=!empty($project)  ? $project->type_id : '' }} {{ ($type_id==$type->id)  ? 'selected' : '' }} value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                      <!-- select option -->
+                                      <div class="form-group">
+                                        <label>Project Status</label>
+                                        <select name="company_id" id="company_id" class="form-control select2">
+                                          <option value="">Select Project Status</option>
+                                          @foreach ($statuses as $status)
+                                            <option {{ !$statuses_id=!empty($project)  ? $project->statuses_id : '' }} {{ ($statuses_id==$status->id)  ? 'selected' : '' }} value="{{$status->id}}">{{$status->name}}</option>
+                                          @endforeach
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+
                                 <div class="row">
                                   <div class="col-sm-12">
                                     <!-- text input -->
@@ -104,40 +107,61 @@
                                     </div>
                                   </div>
                               </div>
-
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <!-- text input -->
-                                  <div class="form-group">
-                                    <label>Progress</label>
-                                    <select name="progress" id="progress" class="form-control">
-                                      <option value="">Select Project Project</option>
-                                      <option value="In-Progress">In-Progress</option>
-                                      <option value="Onhold">Onhold</option>
-                                      <option value="Cancled">Cancled</option>
-                                      <option value="Success">Success</option>
-                                    </select>
-                                  </div>
-                                </div>
-                            </div>
-
                         </div>
 
-                    <div class="card-footer">
+                    {{-- <div class="card-footer">
                         <button type="submit" name="submit" value="submit" class="btn btn-primary">Save</button>
                         <a href="{{ URL::to("project") }}"  class="btn btn-danger">Cancel</a>
-                    </div>
-                    </form>
-                    </div>
-                    
+                    </div> --}}
+                  </div>
                 </div>
-                <div class="col-md-8">
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" name="submit" value="submit" class="btn btn-primary">Save</button>
+                </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+
+
+            <section class="content-header">
+                    <div class="container-fluid">
+                      <div class="row mb-2">
+                        <div class="col-sm-6">
+                          <h1>Project</h1>
+                        </div>
+                        <div class="col-sm-6">
+                          <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Project</li>
+                          </ol>
+                        </div>
+                      </div>
+                    </div><!-- /.container-fluid -->
+                  </section>
+        <div class="container-fluid">
+            <div class="row" id="successMessage">
+              <div class="col-md-12">
+                  @if ($message = Session::get('success'))
+                  <div class="alert alert-success alert-block" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">×</button>	
+                          <strong>{{ $message }}</strong>
+                  </div>
+                  @endif
+              </div>
+            </div>
+            <div class="row">  
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Project Lists</h3>
+                            <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modal-lg">
+                                Add
+                              </button>
                         </div>
                         <div class="card-body">
-                                <table class="table table-bordered table-responsive" id="example1">
+                                <table class="table table-bordered" id="example1">
                                     <thead>                  
                                     <tr>
                                         <th style="width: 10px">#</th>

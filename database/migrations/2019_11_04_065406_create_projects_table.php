@@ -15,14 +15,17 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('type_id');
+            $table->unsignedBigInteger('status_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->date('start_date')->default('2019-12-01');
             $table->date('end_date')->default('2019-12-01');
-            $table->string('progress')->nullable();
             $table->boolean('status')->default(1);
             $table->unsignedBigInteger('user_id')->nullable();
+            //$table->foreign('type_id')->references('id')->on('project_types');
+            //$table->foreign('status_id')->references('id')->on('project_statuses');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
