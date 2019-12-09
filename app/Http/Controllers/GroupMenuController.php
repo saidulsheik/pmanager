@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\GroupMenu;
+use App\Model\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class GroupMenuController extends Controller
@@ -17,7 +18,12 @@ class GroupMenuController extends Controller
         if( Auth::check() ){
             $groupmenu=[];
             $groupmenus = GroupMenu::all();
-            return view('groupmenu.index', ['groupmenus'=>$groupmenus, 'groupmenu'=>$groupmenu]);
+            $roles=Role::all();
+            return view('groupmenu.index', [
+                'groupmenus'=>$groupmenus, 
+                'groupmenu'=>$groupmenu,
+                'roles'=>$roles
+                ]);
         }
         return view('auth.login');
     }
@@ -39,13 +45,14 @@ class GroupMenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         if(Auth::check()){
             $groupmenu = GroupMenu::create([
                 'group_name' => $request->input('group_name'),
                 'group_icon' => $request->input('group_icon'),
                 'is_sub_menu' => $request->input('is_sub_menu'),
                 'sl_order' => $request->input('sl_order'),
+                'user_access'=>implode(",", $request->input('user_access')),
             ]);
             if($groupmenu){
                 return redirect()->route('groupmenu.index', ['groupmenu'=> $groupmenu->id])
@@ -77,7 +84,12 @@ class GroupMenuController extends Controller
         if( Auth::check() ){
             $groupmenus = GroupMenu::all();
             $groupmenu=GroupMenu::find($groupmenu->id);
-            return view('groupmenu.index',  ['groupmenu'=>$groupmenu, 'groupmenus'=>$groupmenus]);
+            $roles=Role::all();
+            return view('groupmenu.index',  [
+                'groupmenu'=>$groupmenu, 
+                'groupmenus'=>$groupmenus,
+                'roles'=>$roles,
+                ]);
         }
     }
 

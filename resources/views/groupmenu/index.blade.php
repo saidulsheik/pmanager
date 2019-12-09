@@ -78,6 +78,20 @@
                                         </div>
                                     </div>
                                 </div>
+								<div class="row">
+									<div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>User Access : &nbsp;</label>
+                                            @foreach ($roles as $role)
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="checkbox" id="{{$role->id}}" value="{{$role->id}}" name="user_access[]">
+                                                    <label for="{{$role->id}}">{{$role->name}}</label>
+                                                </div>
+                                                &nbsp;&nbsp;
+                                            @endforeach
+                                        </div>
+									</div>
+								</div>
 
                         </div>
 
@@ -103,6 +117,7 @@
                                         <th>Menu Icon</th>
                                         <th>Has Sub Menu?</th>
                                         <th>Sl Order</th>
+                                        <th>User Access</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -116,6 +131,20 @@
                                                     <td> {{$groupmenu->group_icon}}</td>
                                                     <td>{{$groupmenu->is_sub_menu==1? 'Yes' : 'No'}}</td>
                                                     <td> {{$groupmenu->sl_order}}</td>
+                                                    <td> 
+                                                        <?php 
+                                                            $roles_id=(explode(',', $groupmenu->user_access)); 
+                                                            $resultname = array();
+                                                            for($i=0; $i<count($roles_id); $i++){
+                                                                $role_names = DB::table('roles')->where('id', '=', $roles_id[$i])->first();
+                                                                $resultname[] = $role_names->name;
+                                                            }
+                                                            echo implode(", ", $resultname);
+                                                           // $role_name = DB::table('menus')->where('id', '=', $menu->menu_id)->first();
+                                                        
+                                                        ?>
+                                                    </td>
+                                                    
                                                     <td style="text-align:center"  title="Edit"> 
                                                         <a href="{{ URL::to("groupmenu/$groupmenu->id/edit") }}">
                                                             <i class="fas fa-edit" style="color:#007bff"></i>
